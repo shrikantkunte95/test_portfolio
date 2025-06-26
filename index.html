@@ -1,53 +1,358 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>My Portfolio</title>
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: #f5f5f5;
-      color: #333;
-    }
-    header {
-      background: #222;
-      color: white;
-      padding: 2rem;
-      text-align: center;
-    }
-    section {
-      padding: 2rem;
-      max-width: 800px;
-      margin: auto;
-    }
-    .card {
-      background: white;
-      padding: 1rem;
-      margin-bottom: 1rem;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-      border-radius: 8px;
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Shrikant Kunte | Software Engineer</title>
+    <style>
+        :root {
+            --bg: #f9f9f9;
+            --text: #333;
+            --accent: #0366d6;
+            --card-bg: #fff;
+            --hover: #024ea2;
+            --nava: #0366d6;
+            --skillCl: #0366d6;
+            --skillbg: #e1ecf4;
+        }
+
+        [data-theme="dark"] {
+            --bg: #0d1117;
+            --text: #c9d1d9;
+            --accent: #58a6ff;
+            --nava: #58a6cf;
+            --card-bg: #161b22;
+            --skillCl: white;
+            --skillbg: #58a6ff;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+
+        header {
+            background-color: var(--card-bg);
+            text-align: center;
+            padding: 2.5rem 1rem 1.5rem;
+            position: relative;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            margin: 0.5rem 0;
+        }
+
+        nav {
+            margin-top: 1rem;
+        }
+
+        nav a {
+            margin: 0 1rem;
+            text-decoration: none;
+            color: var(--nava);
+            font-weight: bold;
+        }
+
+        #themeToggle {
+            position: absolute;
+            display: none;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #themeToggle:hover {
+            background: var(--hover);
+        }
+
+        .toggle-container {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 36px;
+            height: 20px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: 0.4s;
+            border-radius: 34px;
+        }
+
+        .slider::before {
+            position: absolute;
+            content: "";
+            height: 16px;
+            width: 16px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: 0.4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--accent);
+        }
+
+        input:checked+.slider::before {
+            transform: translateX(16px);
+        }
+
+        .label-text {
+            font-size: 1rem;
+        }
+
+        .resume-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            background: var(--accent);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+
+        .resume-btn:hover {
+            background: var(--hover);
+        }
+
+        section {
+            max-width: 900px;
+            margin: auto;
+            padding: 2rem 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            border-bottom: 2px solid #ccc;
+            margin-bottom: 1rem;
+        }
+
+        .project,
+        .blog-post {
+            background: var(--card-bg);
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .project:hover,
+        .blog-post:hover {
+            transform: translateY(-5px);
+        }
+
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skills span {
+            background: var(--skillbg);
+            color: var(--skillCl);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+        }
+
+        .skills span:hover {
+            transform: translateY(-8px) rotateX(18deg) rotateZ(2deg);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.18);
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            background: var(--card-bg);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                display: flex;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+
+            nav a {
+                margin: 0;
+            }
+        }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: none;
+        }
+    </style>
 </head>
+
 <body>
-  <header>
-    <h1>Jane Doe</h1>
-    <p>Web Designer & Frontend Developer</p>
-  </header>
-  <section>
-    <div class="card">
-      <h2>About Me</h2>
-      <p>I create beautiful, responsive websites and apps.</p>
-    </div>
-    <div class="card">
-      <h2>Projects</h2>
-      <ul>
-        <li>Portfolio Website</li>
-        <li>Landing Page UI</li>
-        <li>React App Dashboard</li>
-      </ul>
-    </div>
-  </section>
+    <header>
+        <!-- <button id="themeToggle">Toggle Theme</button> -->
+        <div class="toggle-container">
+            <label class="switch">
+                <input type="checkbox" id="themeToggle">
+                <span class="slider"></span>
+            </label>
+            <!-- <span class="label-text">Toggle Theme</span> -->
+        </div>
+        <h1>Shrikant Kunte</h1>
+        <p>Software Engineer | Full Stack Developer | Problem Solver</p>
+        <nav>
+            <a href="#about">About</a>
+            <a href="#projects">Projects</a>
+            <a href="#blog">Blog</a>
+            <a href="#skills">Skills</a>
+            <a href="#contact">Contact</a>
+        </nav>
+        <a href="Shrikant_Kunte_Resume.pdf" class="resume-btn" download target="_blank">📄 Download Resume</a>
+    </header>
+
+    <section id="about" class="fade-in">
+        <h2 class="section-title">About Me</h2>
+        <p>
+            I'm a passionate software engineer with experience building robust web apps, REST APIs, and scalable
+            solutions. I enjoy solving real-world problems through clean and maintainable code.
+        </p>
+    </section>
+
+    <section id="projects" class="fade-in">
+        <h2 class="section-title">Projects</h2>
+        <div class="project">
+            <h3>DevBoard</h3>
+            <p>A productivity dashboard for developers with GitHub and Trello integration. Built using React and
+                Firebase.</p>
+        </div>
+        <div class="project">
+            <h3>BugTrackr</h3>
+            <p>A bug tracking tool with admin roles and notification system. Created using Node.js, Express, and
+                PostgreSQL.</p>
+        </div>
+    </section>
+
+    <section id="blog" class="fade-in">
+        <h2 class="section-title">Blog</h2>
+        <div class="blog-post">
+            <h3>How I Built My Portfolio with HTML, CSS & JS</h3>
+            <p>A guide to creating a modern personal site without frameworks. Includes responsive layout, dark mode, and
+                deployment tips.</p>
+            <a href="#">Read More →</a>
+        </div>
+        <div class="blog-post">
+            <h3>Understanding REST APIs with Node.js</h3>
+            <p>Learn the basics of creating RESTful services using Express, with real-world code examples and testing
+                methods.</p>
+            <a href="#">Read More →</a>
+        </div>
+    </section>
+
+    <section id="skills" class="fade-in">
+        <h2 class="section-title">Skills</h2>
+        <div class="skills">
+            <span>JavaScript</span>
+            <span>React JS</span>
+            <span>Node.js</span>
+            <span>Express</span>
+            <span>Python</span>
+            <span>Django</span>
+            <span>SQL</span>
+            <span>MongoDB</span>
+            <span>AWS</span>
+            <span>Git</span>
+        </div>
+    </section>
+
+    <section id="contact" class="fade-in">
+        <h2 class="section-title">Contact</h2>
+        <p>Email: <strong>shrikantkunte30@gmail.com</strong></p>
+        <p>GitHub: <a href="https://github.com/shrikantkunte95?tab=repositories" target="_blank">github.com/shrikant</a>
+            | LinkedIn: <a href="#">linkedin.com/in/shrikant</a></p>
+    </section>
+
+    <footer>
+        &copy; 2025 Shrikant Kunte. Built with 💻 and ☕.
+    </footer>
+
+    <script>
+        // // Theme Toggle
+        // const toggleBtn = document.getElementById('themeToggle');
+        // toggleBtn.onclick = () => {
+        //     const currentTheme = document.body.getAttribute('data-theme');
+        //     document.body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+        // };
+
+        const toggle = document.getElementById('themeToggle');
+
+        toggle.addEventListener('change', () => {
+            const currentTheme = document.body.getAttribute('data-theme');
+            document.body.setAttribute('data-theme', currentTheme === 'dark' ? 'light' : 'dark');
+        });
+
+
+        // Fade-in on scroll
+        const faders = document.querySelectorAll('.fade-in');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        faders.forEach(el => observer.observe(el));
+    </script>
+
 </body>
+
 </html>
